@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO-asetukset -->
-    <title>Arvontakone | Verkkosivuprojekti</title>
-    <meta name="description" content="Interaktiivinen arvontakone, joka tallentaa vaihtoehdot selaimen muistiin.">
+    <title>Onnenpyörä | Verkkosivuprojekti</title>
+    <meta name="description" content="Graafinen ja interaktiivinen onnenpyörä, joka tallentaa vaihtoehdot selaimen muistiin.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
@@ -15,7 +15,7 @@
             --primary-color: #2563eb;
             --secondary-color: #1e40af;
             --text-dark: #1f2937;
-            --bg-light: #f9fafb;
+            --bg-light: #f3f4f6;
             --white: #ffffff;
             --accent: #f59e0b;
             --danger: #ef4444;
@@ -36,7 +36,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -46,22 +46,66 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             padding: 1.5rem 0;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid { grid-template-columns: 1fr; }
         }
 
         .app-card {
             background: var(--white);
-            padding: 30px;
+            padding: 25px;
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
-        h1 { margin-bottom: 10px; color: var(--primary-color); }
+        /* Onnenpyörän tyylit */
+        .wheel-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            aspect-ratio: 1 / 1;
+        }
 
+        #wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 8px solid #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
+            transform: rotate(0deg);
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .wheel-pointer svg {
+            fill: var(--danger);
+        }
+
+        /* Ohjauspaneelin tyylit */
         .input-group {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         input {
@@ -73,8 +117,6 @@
             outline: none;
         }
 
-        input:focus { border-color: var(--primary-color); }
-
         .btn {
             padding: 12px 24px;
             border-radius: 8px;
@@ -82,190 +124,252 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            text-align: center;
         }
 
         .btn-add { background-color: var(--primary-color); color: white; }
-        .btn-draw { background-color: var(--accent); color: white; width: 100%; font-size: 1.2rem; margin-top: 10px; }
-        .btn-clear { background-color: transparent; color: var(--text-light); font-size: 0.9rem; text-decoration: underline; }
+        .btn-draw { 
+            background-color: var(--accent); 
+            color: white; 
+            width: 100%; 
+            font-size: 1.3rem; 
+            margin-top: 15px;
+            box-shadow: 0 4px 0 #d97706;
+        }
+        .btn-draw:active { transform: translateY(2px); box-shadow: 0 2px 0 #d97706; }
+        .btn-draw:disabled { background-color: #ccc; box-shadow: none; cursor: not-allowed; }
 
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* Lista arvottavista asioista */
         .item-list {
             list-style: none;
-            margin: 20px 0;
-            max-height: 300px;
+            margin: 15px 0;
+            max-height: 200px;
             overflow-y: auto;
-            border-top: 1px solid #eee;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 5px;
         }
 
         .item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #eee;
+            padding: 8px 12px;
+            background: #f9fafb;
+            margin-bottom: 5px;
+            border-radius: 5px;
         }
 
-        .remove-btn {
-            color: var(--danger);
-            cursor: pointer;
-            font-size: 0.8rem;
-            border: none;
-            background: none;
-        }
+        .remove-btn { color: var(--danger); cursor: pointer; border: none; background: none; font-weight: bold; }
 
-        /* Voittaja-ilmoitus */
-        .result-area {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 12px;
-            background-color: #eff6ff;
+        .result-overlay {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 10px;
             text-align: center;
-            display: none; /* Piilossa kunnes arvotaan */
-            animation: bounce 0.5s ease;
+            display: none;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+        .winner-text { font-size: 1.5rem; font-weight: 700; color: #065f46; display: block; }
 
-        .winner-name {
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--secondary-color);
-            display: block;
-        }
-
-        .empty-state {
-            color: #9ca3af;
-            text-align: center;
-            padding: 20px;
-        }
     </style>
 </head>
 <body>
 
     <header>
         <div class="container">
-            <h1>Onnenpyörä 2.0</h1>
-            <p>Lisää asioita ja anna onnen päättää. Tiedot tallentuvat selaimeesi!</p>
+            <h1>Onnenpyörä 3.0</h1>
+            <p>Lisää vaihtoehdot ja katso mihin pyörä pysähtyy!</p>
         </div>
     </header>
 
     <main class="container">
-        <div class="app-card">
-            <div class="input-group">
-                <input type="text" id="itemInput" placeholder="Lisää uusi vaihtoehto...">
-                <button class="btn btn-add" onclick="addItem()">Lisää</button>
-            </div>
-
-            <ul id="itemList" class="item-list">
-                <!-- Vaihtoehdot ilmestyvät tänne -->
-            </ul>
-
-            <div id="emptyState" class="empty-state">Ei vielä lisättyjä asioita.</div>
-
-            <button class="btn btn-draw" onclick="drawWinner()">SUORITA ARVONTA!</button>
+        <div class="main-grid">
             
-            <div id="resultArea" class="result-area">
-                <p>Ja voittaja on...</p>
-                <span id="winnerName" class="winner-name"></span>
+            <!-- PYÖRÄ-OSIO -->
+            <div class="app-card" style="text-align: center;">
+                <div class="wheel-container">
+                    <div class="wheel-pointer">
+                        <svg viewBox="0 0 24 24"><path d="M12 21l-12-18h24z"/></svg>
+                    </div>
+                    <canvas id="wheelCanvas" width="400" height="400" style="display:none;"></canvas>
+                    <svg id="wheel" viewBox="0 0 100 100"></svg>
+                </div>
+                
+                <button id="drawBtn" class="btn btn-draw" onclick="spinWheel()">PYÖRÄYTÄ!</button>
+                
+                <div id="resultArea" class="result-overlay">
+                    <p>Voittaja on:</p>
+                    <span id="winnerName" class="winner-text"></span>
+                </div>
             </div>
 
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn btn-clear" onclick="clearAll()">Tyhjennä koko lista</button>
+            <!-- HALLINTA-OSIO -->
+            <div class="app-card">
+                <h3>Lisää vaihtoehdot</h3>
+                <div class="input-group">
+                    <input type="text" id="itemInput" placeholder="Nimi tai asia...">
+                    <button class="btn btn-add" onclick="addItem()">Lisää</button>
+                </div>
+
+                <ul id="itemList" class="item-list"></ul>
+                
+                <div style="text-align: right;">
+                    <button class="btn" style="color: var(--danger); font-size: 0.8rem;" onclick="clearAll()">Tyhjennä lista</button>
+                </div>
+
+                <div style="margin-top: 20px; font-size: 0.9rem; color: #666;">
+                    <p>Vinkki: Lisää vähintään 2 vaihtoehtoa. Pyörä päivittyy automaattisesti.</p>
+                </div>
             </div>
+
         </div>
     </main>
 
     <script>
-        // Alustetaan lista selaimen muistista (Local Storage)
-        let items = JSON.parse(localStorage.getItem('lotteryItems')) || [];
+        let items = JSON.parse(localStorage.getItem('lotteryItems')) || ["Esimerkki 1", "Esimerkki 2", "Esimerkki 3"];
+        let isSpinning = false;
+        let currentRotation = 0;
 
-        // Päivitetään näkymä heti ladattaessa
+        const colors = ['#f87171', '#fbbf24', '#34d399', '#60a5fa', '#818cf8', '#a78bfa', '#f472b6', '#4ade80'];
+
+        // Alustus
         updateUI();
+        drawWheel();
 
         function addItem() {
             const input = document.getElementById('itemInput');
             const value = input.value.trim();
-
             if (value) {
                 items.push(value);
-                saveItems();
+                saveAndRefresh();
                 input.value = '';
-                updateUI();
             }
         }
 
         function removeItem(index) {
             items.splice(index, 1);
-            saveItems();
-            updateUI();
+            saveAndRefresh();
         }
 
-        function saveItems() {
-            // Tallentaa listan selaimen Local Storageen JSON-muodossa
+        function saveAndRefresh() {
             localStorage.setItem('lotteryItems', JSON.stringify(items));
+            updateUI();
+            drawWheel();
         }
 
         function updateUI() {
             const listElement = document.getElementById('itemList');
-            const emptyState = document.getElementById('emptyState');
             listElement.innerHTML = '';
-
-            if (items.length === 0) {
-                emptyState.style.display = 'block';
-            } else {
-                emptyState.style.display = 'none';
-                items.forEach((item, index) => {
-                    const li = document.createElement('li');
-                    li.className = 'item';
-                    li.innerHTML = `
-                        <span>${item}</span>
-                        <button class="remove-btn" onclick="removeItem(${index})">Poista</button>
-                    `;
-                    listElement.appendChild(li);
-                });
-            }
+            items.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.className = 'item';
+                li.innerHTML = `<span>${item}</span><button class="remove-btn" onclick="removeItem(${index})">&times;</button>`;
+                listElement.appendChild(li);
+            });
+            document.getElementById('drawBtn').disabled = items.length < 2;
         }
 
-        function drawWinner() {
-            if (items.length < 2) {
-                alert('Lisää vähintään kaksi vaihtoehtoa ennen arvontaa!');
-                return;
-            }
-
-            const resultArea = document.getElementById('resultArea');
-            const winnerSpan = document.getElementById('winnerName');
+        function drawWheel() {
+            const wheel = document.getElementById('wheel');
+            wheel.innerHTML = '';
             
-            // Arvotaan satunnainen indeksi
-            const randomIndex = Math.floor(Math.random() * items.length);
-            const winner = items[randomIndex];
+            if (items.length === 0) return;
 
-            winnerSpan.textContent = winner;
-            resultArea.style.display = 'block';
+            const sliceAngle = 360 / items.length;
             
-            // Pieni efekti: rullataan tulosta
-            winnerSpan.style.opacity = '0';
+            items.forEach((item, i) => {
+                const angle = i * sliceAngle;
+                const nextAngle = (i + 1) * sliceAngle;
+                
+                // Luodaan SVG-lohko
+                const pathData = createArc(50, 50, 50, angle, nextAngle);
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", pathData);
+                path.setAttribute("fill", colors[i % colors.length]);
+                path.setAttribute("stroke", "#fff");
+                path.setAttribute("stroke-width", "0.5");
+                wheel.appendChild(path);
+
+                // Lisätään teksti
+                const textAngle = angle + (sliceAngle / 2);
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                const radians = (textAngle - 90) * Math.PI / 180;
+                const x = 50 + 30 * Math.cos(radians);
+                const y = 50 + 30 * Math.sin(radians);
+                
+                text.setAttribute("x", x);
+                text.setAttribute("y", y);
+                text.setAttribute("fill", "white");
+                text.setAttribute("font-size", items.length > 10 ? "2" : "4");
+                text.setAttribute("font-weight", "bold");
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("transform", `rotate(${textAngle}, ${x}, ${y})`);
+                text.textContent = item.length > 15 ? item.substring(0, 12) + "..." : item;
+                wheel.appendChild(text);
+            });
+        }
+
+        function createArc(x, y, radius, startAngle, endAngle) {
+            const start = polarToCartesian(x, y, radius, endAngle);
+            const end = polarToCartesian(x, y, radius, startAngle);
+            const largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+            return [
+                "M", x, y,
+                "L", start.x, start.y,
+                "A", radius, radius, 0, largeArcFlag, 0, end.x, end.y,
+                "Z"
+            ].join(" ");
+        }
+
+        function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+            const angleInRadians = (angleInDegrees - 90) * Math.PI / 180.0;
+            return {
+                x: centerX + (radius * Math.cos(angleInRadians)),
+                y: centerY + (radius * Math.sin(angleInRadians))
+            };
+        }
+
+        function spinWheel() {
+            if (isSpinning || items.length < 2) return;
+
+            isSpinning = true;
+            document.getElementById('resultArea').style.display = 'none';
+            
+            // Satunnainen pyörähdys (vähintään 5 kierrosta + satunnainen kulma)
+            const extraDegrees = Math.floor(Math.random() * 360);
+            const totalSpin = 1800 + extraDegrees; 
+            currentRotation += totalSpin;
+
+            const wheel = document.getElementById('wheel');
+            wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+            // Lasketaan voittaja kulman perusteella animaation jälkeen
             setTimeout(() => {
-                winnerSpan.style.opacity = '1';
-                winnerSpan.style.transition = 'opacity 0.5s';
-            }, 100);
+                isSpinning = false;
+                
+                // Lasketaan mikä lohko on ylhäällä (0 astetta)
+                // Huom: Koska pyörä pyörii myötäpäivään, lohkot liikkuvat "vastapäivään" suhteessa nuoleen
+                const finalAngle = (360 - (currentRotation % 360)) % 360;
+                const sliceSize = 360 / items.length;
+                const winnerIndex = Math.floor(finalAngle / sliceSize);
+                
+                const winner = items[winnerIndex];
+                document.getElementById('winnerName').textContent = winner;
+                document.getElementById('resultArea').style.display = 'block';
+            }, 5000);
         }
 
         function clearAll() {
-            if (confirm('Haluatko varmasti tyhjentää koko listan?')) {
+            if (confirm('Tyhjennetäänkö lista?')) {
                 items = [];
-                saveItems();
-                updateUI();
+                saveAndRefresh();
                 document.getElementById('resultArea').style.display = 'none';
             }
         }
 
-        // Mahdollistetaan Enter-näppäimen käyttö lisäyksessä
-        document.getElementById('itemInput').addEventListener('keypress', function (e) {
+        document.getElementById('itemInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') addItem();
         });
     </script>
