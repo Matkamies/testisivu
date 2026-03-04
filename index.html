@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO-asetukset: Nämä auttavat Googlen kaltaisia hakukoneita löytämään sivusi -->
-    <title>Minun GitHub Pages -sivuni | Ammattimainen Verkkosivupohja</title>
-    <meta name="description" content="Tervetuloa tutustumaan ensimmäiseen GitHub Pages -pohjaiseen verkkosivuuni. Tämä sivu on optimoitu nopeaksi ja helppokäyttöiseksi.">
+    <!-- SEO-asetukset -->
+    <title>Verkkosivuprojekti | VS Code & Gemini</title>
+    <meta name="description" content="Projektin eteneminen ja uudet toiminnallisuudet Gemini Code Assistin avulla.">
     <meta name="author" content="Sinun Nimesi">
     
-    <!-- Google Fonts: Moderni fontti parantaa käyttäjäkokemusta -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary-color: #2563eb;
+            --secondary-color: #1e40af;
             --text-dark: #1f2937;
             --text-light: #6b7280;
             --bg-light: #f9fafb;
             --white: #ffffff;
+            --accent: #f59e0b;
         }
 
         * {
@@ -32,21 +33,22 @@
             line-height: 1.6;
             color: var(--text-dark);
             background-color: var(--bg-light);
-        }
-
-        header {
-            background-color: var(--white);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            padding: 1.5rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            scroll-behavior: smooth;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         nav {
@@ -71,7 +73,6 @@
         .nav-links a {
             text-decoration: none;
             color: var(--text-dark);
-            font-weight: 400;
             transition: color 0.3s;
         }
 
@@ -80,75 +81,93 @@
         }
 
         .hero {
-            padding: 100px 0;
+            padding: 80px 0;
             text-align: center;
             background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
             color: var(--text-dark);
-        }
-
-        .hero p {
-            font-size: 1.125rem;
-            color: var(--text-light);
-            max-width: 600px;
-            margin: 0 auto 2rem;
         }
 
         .btn {
             display: inline-block;
             background-color: var(--primary-color);
             color: var(--white);
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         .btn:hover {
-            background-color: #1d4ed8;
+            background-color: var(--secondary-color);
             transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
         }
 
         .content-section {
             padding: 80px 0;
-            background-color: var(--white);
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+        /* Yhteydenottolomake */
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .card {
-            padding: 30px;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            transition: box-shadow 0.3s;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        /* FAQ Osiota varten */
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
         }
 
         footer {
             background-color: var(--text-dark);
             color: var(--white);
-            padding: 40px 0;
+            padding: 60px 0 20px;
             text-align: center;
-            margin-top: 50px;
         }
 
-        /* Mobiiliresponsiivisuus */
         @media (max-width: 600px) {
             .hero h1 { font-size: 2rem; }
-            .nav-links { display: none; } /* Simppeliyden vuoksi mobiilissa piiloon tässä vaiheessa */
+            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -157,10 +176,10 @@
     <header>
         <div class="container">
             <nav>
-                <a href="#" class="logo">OmaSivu</a>
+                <a href="#" class="logo">GeminiProjekti</a>
                 <ul class="nav-links">
-                    <li><a href="#ominaisuudet">Ominaisuudet</a></li>
-                    <li><a href="#tietoa">Tietoa</a></li>
+                    <li><a href="#prosessikuvaus">Työnkulku</a></li>
+                    <li><a href="#faq">UKK</a></li>
                     <li><a href="#yhteys">Yhteys</a></li>
                 </ul>
             </nav>
@@ -169,42 +188,52 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Tervetuloa GitHub Pages -sivustolle</h1>
-            <p>Tämä on harjoitussivu, jonka tarkoituksena on testata julkaisuprosessia ja luoda pohja upealle verkkosivustollesi.</p>
-            <a href="#ominaisuudet" class="btn">Lue lisää</a>
+            <h1>Tekoälyavusteinen Suunnittelu</h1>
+            <p>Olet nyt yhdistänyt VS Coden, GitHubin ja Geminin. Tämä on tehokkain tapa rakentaa nykyaikaisia verkkosivuja.</p>
+            <a href="#yhteys" class="btn">Aloita kokeilu</a>
         </div>
     </section>
 
-    <section id="ominaisuudet" class="content-section">
+    <section id="faq" class="content-section">
         <div class="container">
-            <h2 style="text-align: center;">Miksi GitHub Pages?</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>Ilmainen</h3>
-                    <p>Sivuston ylläpito ei maksa mitään, kun käytät julkista repositorya.</p>
-                </div>
-                <div class="card">
-                    <h3>Nopea</h3>
-                    <p>Sivut latautuvat salamannopeasti suoraan GitHubin CDN-verkosta.</p>
-                </div>
-                <div class="card">
-                    <h3>SEO-ystävällinen</h3>
-                    <p>Koodi on puhdasta, mikä on erinomainen lähtökohta hakunäkyvyydelle.</p>
-                </div>
+            <h2 class="section-title">Usein kysytyt kysymykset</h2>
+            <div class="faq-item">
+                <h3>Miten päivitän sivun?</h3>
+                <p>Tallenna koodi VS Codessa, tee "Commit" ja "Push" Source Control -välilehdellä. GitHub hoitaa loput.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Voiko Gemini auttaa CSS-tyyleissä?</h3>
+                <p>Kyllä! Voit pyytää Geminiä muuttamaan värejä, fontteja tai tekemään sivusta responsiivisen.</p>
             </div>
         </div>
     </section>
 
-    <footer id="yhteys">
+    <section id="yhteys" class="content-section" style="background-color: #f3f4f6;">
         <div class="container">
-            <p>&copy; 2024 - Luotu innolla GitHub Pagesiin</p>
-            <p style="font-size: 0.8rem; margin-top: 10px; color: #9ca3af;">Verkkosivusuunnittelijan harjoitusprojekti</p>
+            <h2 class="section-title">Ota yhteyttä</h2>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Lomake on demo-tilassa!');">
+                <div class="form-group">
+                    <label>Nimi</label>
+                    <input type="text" placeholder="Kirjoita nimesi...">
+                </div>
+                <div class="form-group">
+                    <label>Sähköposti</label>
+                    <input type="email" placeholder="esimerkki@posti.fi">
+                </div>
+                <div class="form-group">
+                    <label>Viesti</label>
+                    <textarea rows="4" placeholder="Miten voimme auttaa?"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Lähetä viesti</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 - Gemini Code Assist x GitHub Pages</p>
         </div>
     </footer>
 
-    <script>
-        // Tähän voidaan lisätä myöhemmin toiminnallisuuksia
-        console.log("Sivusto ladattu onnistuneesti!");
-    </script>
 </body>
 </html>
