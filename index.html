@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO-asetukset: Nämä auttavat Googlen kaltaisia hakukoneita löytämään sivusi -->
+    <title>Minun GitHub Pages -sivuni | Ammattimainen Verkkosivupohja</title>
+    <meta name="description" content="Tervetuloa tutustumaan ensimmäiseen GitHub Pages -pohjaiseen verkkosivuuni. Tämä sivu on optimoitu nopeaksi ja helppokäyttöiseksi.">
+    <meta name="author" content="Sinun Nimesi">
+    
+    <!-- Google Fonts: Moderni fontti parantaa käyttäjäkokemusta -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .card {
+            padding: 30px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            transition: box-shadow 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Mobiiliresponsiivisuus */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; } /* Simppeliyden vuoksi mobiilissa piiloon tässä vaiheessa */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">OmaSivu</a>
+                <ul class="nav-links">
+                    <li><a href="#ominaisuudet">Ominaisuudet</a></li>
+                    <li><a href="#tietoa">Tietoa</a></li>
+                    <li><a href="#yhteys">Yhteys</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Tervetuloa GitHub Pages -sivustolle</h1>
+            <p>Tämä on harjoitussivu, jonka tarkoituksena on testata julkaisuprosessia ja luoda pohja upealle verkkosivustollesi.</p>
+            <a href="#ominaisuudet" class="btn">Lue lisää</a>
+        </div>
+    </section>
+
+    <section id="ominaisuudet" class="content-section">
+        <div class="container">
+            <h2 style="text-align: center;">Miksi GitHub Pages?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Ilmainen</h3>
+                    <p>Sivuston ylläpito ei maksa mitään, kun käytät julkista repositorya.</p>
+                </div>
+                <div class="card">
+                    <h3>Nopea</h3>
+                    <p>Sivut latautuvat salamannopeasti suoraan GitHubin CDN-verkosta.</p>
+                </div>
+                <div class="card">
+                    <h3>SEO-ystävällinen</h3>
+                    <p>Koodi on puhdasta, mikä on erinomainen lähtökohta hakunäkyvyydelle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="yhteys">
+        <div class="container">
+            <p>&copy; 2024 - Luotu innolla GitHub Pagesiin</p>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: #9ca3af;">Verkkosivusuunnittelijan harjoitusprojekti</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tähän voidaan lisätä myöhemmin toiminnallisuuksia
+        console.log("Sivusto ladattu onnistuneesti!");
+    </script>
+</body>
+</html>
