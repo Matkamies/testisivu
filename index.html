@@ -80,21 +80,24 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 8px solid #333;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border: 6px solid #222;
+            /* Siistitty ja pehmennetty varjostus */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1);
             transform: rotate(0deg);
+            background: #fff;
         }
 
         .wheel-pointer {
             position: absolute;
-            top: -10px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             z-index: 10;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            /* Siistitty osoittimen varjo */
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
         }
 
         .wheel-pointer svg {
@@ -350,7 +353,6 @@
                 isSpinning = false;
                 
                 // Lasketaan mikä lohko on ylhäällä (0 astetta)
-                // Huom: Koska pyörä pyörii myötäpäivään, lohkot liikkuvat "vastapäivään" suhteessa nuoleen
                 const finalAngle = (360 - (currentRotation % 360)) % 360;
                 const sliceSize = 360 / items.length;
                 const winnerIndex = Math.floor(finalAngle / sliceSize);
